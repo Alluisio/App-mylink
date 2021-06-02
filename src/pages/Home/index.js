@@ -1,9 +1,10 @@
 import React from "react";
-import { Text } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import StatusBarPage from "../../components/StatusBarPage";
 import Menu from "../../components/Menu";
+
+import { ContainerLogo, Logo } from "./styles";
 
 const Home = () => {
   return (
@@ -11,9 +12,12 @@ const Home = () => {
       colors={["#1dddd9", "#132742"]}
       style={{ flex: 1, justifyContent: "center" }}
     >
-      <Menu />
       <StatusBarPage backgroundColor="#1dddd9" barStyle="light-content" />
-      <Text>Página Home</Text>
+      <Menu />
+
+      <ContainerLogo>
+        <Logo source={require("../../assets/Logo.png")} resizeMode="contain" />
+      </ContainerLogo>
     </LinearGradient>
   );
 };
