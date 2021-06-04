@@ -1,5 +1,10 @@
 import React from "react";
-import { TouchableOpacity, View, TouchableWithoutFeedback } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  TouchableWithoutFeedback,
+  Share,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import Clipboard from "expo-clipboard";
 
@@ -19,6 +24,27 @@ const ModalLink = ({ onClose }) => {
     Clipboard.setString("https://seulink.com.br");
     alert("link copiado com sucesso!");
   };
+
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Link: https://seulink.com.br`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log("ActivityType");
+        } else {
+          // Compartilhou
+          console.log("Compartilhado com sucesso!");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log("modal fechado");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <ModalContainer>
       <TouchableWithoutFeedback onPress={onClose}>
@@ -30,7 +56,7 @@ const ModalLink = ({ onClose }) => {
           <TouchableOpacity onPress={onClose}>
             <Feather name="x" color="#212743" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleShare}>
             <Feather name="share" color="#212743" size={30} />
           </TouchableOpacity>
         </Header>
