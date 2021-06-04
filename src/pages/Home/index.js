@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TouchableWithoutFeedback,
   Keyboard,
@@ -26,6 +26,12 @@ import {
 } from "./styles";
 
 const Home = () => {
+  const [input, setInput] = useState("");
+
+  const handleShortLink = () => {
+    alert("url digitada: " + input);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <LinearGradient
@@ -59,10 +65,12 @@ const Home = () => {
                 autoCaptalize="none"
                 autoCorrect={false}
                 keyboardType="url"
+                value={input}
+                onChangeText={(text) => setInput(text)}
               />
             </ContainerInput>
 
-            <ButtonLink>
+            <ButtonLink onPress={handleShortLink}>
               <ButtonLiknkText>Gerar Link</ButtonLiknkText>
             </ButtonLink>
           </ContainerContent>
