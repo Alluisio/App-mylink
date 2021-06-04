@@ -4,6 +4,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Modal,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,6 +12,7 @@ import StatusBarPage from "../../components/StatusBarPage";
 import { Feather } from "@expo/vector-icons";
 
 import Menu from "../../components/Menu";
+import ModalLink from "../../components/ModalLink";
 
 import {
   ContainerLogo,
@@ -27,9 +29,10 @@ import {
 
 const Home = () => {
   const [input, setInput] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleShortLink = () => {
-    alert("url digitada: " + input);
+    setModalVisible(true);
   };
 
   return (
@@ -75,6 +78,9 @@ const Home = () => {
             </ButtonLink>
           </ContainerContent>
         </KeyboardAvoidingView>
+        <Modal visible={modalVisible} transparent animationType="slide">
+          <ModalLink />
+        </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
   );
