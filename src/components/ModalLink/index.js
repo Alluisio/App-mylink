@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View, TouchableWithoutFeedback } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import Clipboard from "expo-clipboard";
 
 import {
   ModalContainer,
@@ -14,6 +15,10 @@ import {
 } from "./styles";
 
 const ModalLink = ({ onClose }) => {
+  const copyLink = () => {
+    Clipboard.setString("https://seulink.com.br");
+    alert("link copiado com sucesso!");
+  };
   return (
     <ModalContainer>
       <TouchableWithoutFeedback onPress={onClose}>
@@ -33,11 +38,11 @@ const ModalLink = ({ onClose }) => {
           <Title>Link encurtado</Title>
           <LongUrl numberOfLines={1}>https://sujeitoprogramador.com</LongUrl>
 
-          <ShortLinkArea activeOpacity={1}>
+          <ShortLinkArea activeOpacity={1} onPress={copyLink}>
             <ShortLinkUrl numberOfLines={1}>
               https://bit.ly/asdasdasdas
             </ShortLinkUrl>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={copyLink}>
               <Feather name="copy" color="#fff" size={25} />
             </TouchableOpacity>
           </ShortLinkArea>
