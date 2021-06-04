@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, TouchableWithoutFeedback } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import {
@@ -13,13 +13,16 @@ import {
   ShortLinkUrl,
 } from "./styles";
 
-const ModalLink = () => {
+const ModalLink = ({ onClose }) => {
   return (
     <ModalContainer>
-      <View style={{ flex: 1 }}></View>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={{ flex: 1 }}></View>
+      </TouchableWithoutFeedback>
+
       <Container>
         <Header>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onClose}>
             <Feather name="x" color="#212743" size={30} />
           </TouchableOpacity>
           <TouchableOpacity>
