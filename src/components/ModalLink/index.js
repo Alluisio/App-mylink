@@ -19,16 +19,16 @@ import {
   ShortLinkUrl,
 } from "./styles";
 
-const ModalLink = ({ onClose }) => {
+const ModalLink = ({ onClose, data }) => {
   const copyLink = () => {
-    Clipboard.setString("https://seulink.com.br");
+    Clipboard.setString(data.link);
     alert("link copiado com sucesso!");
   };
 
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: `Link: https://seulink.com.br`,
+        message: `Link: ${data.link}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -62,12 +62,10 @@ const ModalLink = ({ onClose }) => {
         </Header>
         <LinkArea>
           <Title>Link encurtado</Title>
-          <LongUrl numberOfLines={1}>https://sujeitoprogramador.com</LongUrl>
+          <LongUrl numberOfLines={1}>{data.long_url}</LongUrl>
 
           <ShortLinkArea activeOpacity={1} onPress={copyLink}>
-            <ShortLinkUrl numberOfLines={1}>
-              https://bit.ly/asdasdasdas
-            </ShortLinkUrl>
+            <ShortLinkUrl numberOfLines={1}>{data.link}</ShortLinkUrl>
             <TouchableOpacity onPress={copyLink}>
               <Feather name="copy" color="#fff" size={25} />
             </TouchableOpacity>

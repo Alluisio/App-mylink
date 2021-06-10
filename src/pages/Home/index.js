@@ -107,7 +107,7 @@ const Home = () => {
           </ContainerContent>
         </KeyboardAvoidingView>
         <Modal visible={modalVisible} transparent animationType="slide">
-          <ModalLink onClose={() => setModalVisible(false)} />
+          <ModalLink onClose={() => setModalVisible(false)} data={data} />
         </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
