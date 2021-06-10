@@ -5,14 +5,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 
-import { LinearGradient } from "expo-linear-gradient";
-import StatusBarPage from "../../components/StatusBarPage";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
-import Menu from "../../components/Menu";
+import StatusBarPage from "../../components/StatusBarPage";
 import ModalLink from "../../components/ModalLink";
+import Menu from "../../components/Menu";
+import api from "../../services/api";
 
 import {
   ContainerLogo,
@@ -28,11 +30,33 @@ import {
 } from "./styles";
 
 const Home = () => {
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState({});
 
-  const handleShortLink = () => {
-    setModalVisible(true);
+  const handleShortLink = async () => {
+    setLoading(true);
+
+    try {
+      const response = await api.post("/shorten", {
+        long_url: input,
+      });
+
+      setData(response.data);
+      setModalVisible(true);
+
+      Keyboard.dismiss();
+      setLoading(false);
+      setInput("");
+    } catch (err) {
+      alert("Ops parece que algo deu errado.");
+
+      Keyboard.dismiss();
+      setInput("");
+      setLoading(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -74,12 +98,16 @@ const Home = () => {
             </ContainerInput>
 
             <ButtonLink onPress={handleShortLink}>
-              <ButtonLiknkText>Gerar Link</ButtonLiknkText>
+              {loading ? (
+                <ActivityIndicator color="#121212" size={24} />
+              ) : (
+                <ButtonLiknkText>Gerar Link</ButtonLiknkText>
+              )}
             </ButtonLink>
           </ContainerContent>
         </KeyboardAvoidingView>
         <Modal visible={modalVisible} transparent animationType="slide">
-          <ModalLink onClose={() => setModalVisible(false)} />
+          <ModalLink onClose={() => setModalVisible(false)} data={data} />
         </Modal>
       </LinearGradient>
     </TouchableWithoutFeedback>
